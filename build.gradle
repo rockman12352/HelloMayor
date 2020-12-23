@@ -34,8 +34,9 @@ dependencies {
 
     compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
     api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-    
+
     compile "io.github.libktx:ktx-app:$ktxVersion"
+    compile "io.github.libktx:ktx-assets:$ktxVersion"
 
     // Use the Kotlin test library.
     testImplementation 'org.jetbrains.kotlin:kotlin-test'

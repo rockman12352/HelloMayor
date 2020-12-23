@@ -3,9 +3,34 @@
  */
 package com.rockman.helloMayor
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
+import com.badlogic.gdx.graphics.GL20
+import com.rockman.helloMayor.utils.Constants
+import ktx.app.KtxApplicationAdapter
+import ktx.assets.AssetGroup
+import ktx.assets.getValue
+import ktx.assets.loadOnDemand
 
+class App: KtxApplicationAdapter {
+    override fun create() {
+        super.create()
+        var am = AssetManager()
+        val rockman by am.loadOnDemand<AssetGroup>("rockman.atlas")
+        //rockman.
+    }
+    override fun render() {
+        super.render()
+        Gdx.gl.glClearColor(0f, 0f, 0.2f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
+}
 fun main(args: Array<String>) {
-    LwjglApplication(GameScene(), LwjglApplicationConfiguration())
+    var config = LwjglApplicationConfiguration()
+    config.width = 640
+    config.height = 480
+    config.title = Constants.GAME_TITLE
+    LwjglApplication(App(), config)
 }
