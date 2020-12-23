@@ -8,23 +8,36 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.rockman.helloMayor.stages.MenuStage
 import com.rockman.helloMayor.utils.Constants
 import ktx.app.KtxApplicationAdapter
 import ktx.assets.AssetGroup
 import ktx.assets.getValue
 import ktx.assets.loadOnDemand
+import ktx.scene2d.Scene2DSkin
+import ktx.scene2d.scene2d
 
 class App: KtxApplicationAdapter {
+    lateinit var stage: Stage
     override fun create() {
         super.create()
         var am = AssetManager()
-        val rockman by am.loadOnDemand<AssetGroup>("rockman.atlas")
+        //val rockman by am.loadOnDemand<AssetGroup>("rockman.atlas")
+        Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("uiskin.json"))
+        stage = MenuStage(am)
+        Gdx.input.inputProcessor = stage
         //rockman.
     }
     override fun render() {
         super.render()
         Gdx.gl.glClearColor(0f, 0f, 0.2f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+        stage.act()
+        stage.draw()
     }
 }
 fun main(args: Array<String>) {
