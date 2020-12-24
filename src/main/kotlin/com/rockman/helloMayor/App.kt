@@ -8,10 +8,13 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.rockman.helloMayor.stages.GameStage
 import com.rockman.helloMayor.stages.MenuStage
 import com.rockman.helloMayor.utils.Constants
 import ktx.app.KtxApplicationAdapter
@@ -23,12 +26,17 @@ import ktx.scene2d.scene2d
 
 class App: KtxApplicationAdapter {
     lateinit var stage: Stage
+    lateinit var menuStage: Stage
+    lateinit var gameStage: Stage
+    lateinit var batch: SpriteBatch
+    var am = AssetManager()
     override fun create() {
         super.create()
-        var am = AssetManager()
         //val rockman by am.loadOnDemand<AssetGroup>("rockman.atlas")
         Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("uiskin.json"))
-        stage = MenuStage(am)
+        gameStage = GameStage(this)
+        menuStage = MenuStage(am, EventListener { _->stage = gameStage; true })
+        stage = menuStage
         Gdx.input.inputProcessor = stage
         //rockman.
     }
