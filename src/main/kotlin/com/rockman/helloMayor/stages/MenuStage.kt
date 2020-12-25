@@ -1,6 +1,5 @@
 package com.rockman.helloMayor.stages
 
-import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
@@ -8,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import ktx.scene2d.Scene2DSkin
 
-class MenuStage(assetManager: AssetManager, onStart: EventListener): Stage() {
+class MenuStage( onStart: EventListener): Stage() {
     init {
         var t = Table(Scene2DSkin.defaultSkin)
         t.setFillParent(true)
