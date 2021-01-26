@@ -1,5 +1,9 @@
 package com.rockman.helloMayor.utils
 
 object Constants {
-    var GAME_TITLE = "Hello Mayor"
+    const val GAME_TITLE = "Hello Mayor"
+
+    enum class States {
+        SLEEP, WORK, EAT, PLAY
+    }
 }
