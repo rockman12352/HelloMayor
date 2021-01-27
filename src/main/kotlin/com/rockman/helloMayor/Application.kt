@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.rockman.helloMayor.stages.GameStage
+import com.rockman.helloMayor.stages.PixelGameStage
 import com.rockman.helloMayor.stages.MenuStage
 import com.rockman.helloMayor.utils.Constants
 import ktx.app.KtxApplicationAdapter
@@ -30,8 +31,8 @@ object App : KtxApplicationAdapter {
         //val rockman by am.loadOnDemand<AssetGroup>("rockman.atlas")
         Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("uiskin.json"))
         gameStage = GameStage()
-        menuStage = MenuStage(EventListener { _ -> stage = gameStage;Gdx.input.inputProcessor = stage; true })
-        stage = menuStage
+        menuStage = MenuStage(EventListener { _ -> stage = gameStage; Gdx.input.inputProcessor = stage; true })
+        stage = gameStage
         Gdx.input.inputProcessor = stage
         //rockman.
     }
@@ -48,8 +49,8 @@ object App : KtxApplicationAdapter {
 
 fun main(args: Array<String>) {
     var config = LwjglApplicationConfiguration()
-    config.width = 640
-    config.height = 480
+    config.width = 100
+    config.height = 100
     config.title = Constants.GAME_TITLE
     LwjglApplication(App, config)
 }
