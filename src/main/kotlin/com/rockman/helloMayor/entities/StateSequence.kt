@@ -2,18 +2,16 @@ package com.rockman.helloMayor.entities
 
 import com.rockman.helloMayor.utils.Constants
 
-class State {
-    private var index = 0
-    private var remain = 0
-    private val sequence = listOf(
-            Entry(Constants.States.SLEEP, 1000),
-            Entry(Constants.States.EAT, 500))
-
+class StateSequence(
+        private var index: Int = 0,
+        private val sequence: List<Entry> = listOf(Entry(Constants.States.SLEEP, 1000), Entry(Constants.States.EAT, 500)),
+        private var remain: Int = 0
+) {
     init {
         remain = sequence[index].duration
     }
 
-    fun getCurrentState(): Entry {
+    private fun getCurrentState(): Entry {
         return sequence[index]
     }
 
@@ -22,9 +20,8 @@ class State {
         if (remain <= 0) {
             index = (index + 1) % sequence.size
             remain = getCurrentState().duration
-            println("pass" + time + " changed to " + getCurrentState().state.name)
         }
     }
-}
 
-class Entry(val state: Constants.States, val duration: Int)
+    class Entry(val state: Constants.States, val duration: Int)
+}

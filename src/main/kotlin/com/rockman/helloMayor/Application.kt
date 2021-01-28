@@ -8,16 +8,17 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.rockman.helloMayor.stages.GameStage
-import com.rockman.helloMayor.stages.PixelGameStage
 import com.rockman.helloMayor.stages.MenuStage
 import com.rockman.helloMayor.utils.Constants
 import ktx.app.KtxApplicationAdapter
 import ktx.scene2d.Scene2DSkin
+
 
 object App : KtxApplicationAdapter {
     lateinit var stage: Stage
@@ -34,12 +35,17 @@ object App : KtxApplicationAdapter {
         menuStage = MenuStage(EventListener { _ -> stage = gameStage; Gdx.input.inputProcessor = stage; true })
         stage = gameStage
         Gdx.input.inputProcessor = stage
-        //rockman.
+
+
+        var cam = gameStage.viewport.camera
+        cam.viewportHeight*=2
+        cam.viewportWidth*=2
+        cam.update()
     }
 
     override fun render() {
         super.render()
-        Gdx.gl.glClearColor(0f, 0f, 0.2f, 1f);
+        Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         elapsedTime += Gdx.graphics.deltaTime
         stage.act()

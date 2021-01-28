@@ -9,7 +9,6 @@ import com.rockman.helloMayor.actors.Human
 import ktx.scene2d.Scene2DSkin
 
 class MenuStage(onStart: EventListener) : Stage() {
-    val m = Human()
 
     init {
         var t = Table(Scene2DSkin.defaultSkin)
@@ -25,6 +24,5 @@ class MenuStage(onStart: EventListener) : Stage() {
 
     override fun act(delta: Float) {
         super.act(delta)
-        m.pass(delta*1000)
     }
 }
