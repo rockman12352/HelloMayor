@@ -18,6 +18,9 @@ class Facilitate(
     companion object {
         lateinit var RECTANGLE: Texture
         val SQUARE by App.am.loadOnDemand<Texture>("square.png")
+        val STAR by App.am.loadOnDemand<Texture>("star.png")
+        val TRIANGLE by App.am.loadOnDemand<Texture>("triangle.png")
+
         init {
 
 //            val pixmap = Pixmap(50, 50, Pixmap.Format.RGBA8888)
@@ -37,7 +40,13 @@ class Facilitate(
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
-        batch?.draw(SQUARE, x, y)
+        when (type) {
+            Type.HOUSE -> batch?.draw(SQUARE, x, y)
+            Type.OFFICE -> batch?.draw(TRIANGLE, x, y)
+            Type.PLAYGROUND -> batch?.draw(STAR, x, y)
+            else -> batch?.draw(STAR, x, y)
+        }
+
     }
 
 

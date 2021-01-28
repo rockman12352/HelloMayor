@@ -55,8 +55,8 @@ object App : KtxApplicationAdapter {
 
 fun main(args: Array<String>) {
     var config = LwjglApplicationConfiguration()
-    config.width = 100
-    config.height = 100
+    config.width = 200
+    config.height = 200
     config.title = Constants.GAME_TITLE
     LwjglApplication(App, config)
 }

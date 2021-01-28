@@ -7,5 +7,9 @@ class FacilitateService(
 ) {
     init {
         facilitateList.add(Facilitate(Facilitate.Type.HOUSE))
+        var office = Facilitate(Facilitate.Type.OFFICE)
+        office.x = 100f
+        office.y = 100f
+        facilitateList.add(office)
     }
 }

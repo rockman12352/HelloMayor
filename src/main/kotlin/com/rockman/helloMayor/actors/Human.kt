@@ -18,6 +18,11 @@ class Human(
         this.endurance = endurance
     }
 
+    init {
+        x = -100f
+        y = -100f
+    }
+
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
