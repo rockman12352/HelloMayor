@@ -36,7 +36,6 @@ object App : KtxApplicationAdapter {
         stage = gameStage
         Gdx.input.inputProcessor = stage
 
-
         var cam = gameStage.viewport.camera
         cam.viewportHeight*=2
         cam.viewportWidth*=2

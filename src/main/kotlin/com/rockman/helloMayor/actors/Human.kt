@@ -3,33 +3,61 @@ package com.rockman.helloMayor.actors
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.Actor
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction
 import com.rockman.helloMayor.App
 import com.rockman.helloMayor.entities.StateSequence
+import com.rockman.helloMayor.services.HumanService
+import com.rockman.helloMayor.utils.ActorUtil
 import ktx.assets.getValue
 import ktx.assets.loadOnDemand
-
 class Human(
-        val state: StateSequence = StateSequence()
+        private val state: StateSequence = StateSequence(),
+        private val speed: Float = 20f,
+        private val humanService: HumanService,
+        private val endurance: Int = 10
 ) : Actor() {
-    var endurance: Int = 10
+    var target: Facilitate? = null
     val texture by App.am.loadOnDemand<Texture>("human.png")
-
-    constructor(endurance: Int) : this() {
-        this.endurance = endurance
-    }
+    var isMoving = false
 
     init {
         x = -100f
         y = -100f
+        width = 50f
+        height = 50f
+        debug = true
     }
-
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
         super.draw(batch, parentAlpha)
         batch?.draw(texture, x, y)
     }
 
-    fun pass(delta: Float) {
-        state.consume(delta.toInt())
+    fun pass(second: Float) {
+        if (target == null) {
+            target = humanService.findNearestFacilityByState(this, state.getCurrentState())
+        } else {
+            if (ActorUtil.isCollide(this, target!!)) {
+                if (isMoving) {
+                    setPosition(target!!.x, target!!.y)
+                    clearActions()
+                    isMoving = false
+                }
+                if (!state.consume((second * 1000).toInt())) {
+                    target = null
+                }
+            } else {
+                moveToTarget(target!!)
+            }
+        }
+    }
+
+    private fun moveToTarget(target: Actor) {
+        var action = MoveToAction()
+        action.setPosition(target.x, target.y)
+        action.duration = ActorUtil.distance(this, target) / speed
+        addAction(action)
+        isMoving = true
     }
 }
