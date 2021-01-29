@@ -3,20 +3,20 @@ package com.rockman.helloMayor.actors
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction
 import com.rockman.helloMayor.App
 import com.rockman.helloMayor.entities.StateSequence
-import com.rockman.helloMayor.services.HumanService
+import com.rockman.helloMayor.services.GameService
 import com.rockman.helloMayor.utils.ActorUtil
 import ktx.assets.getValue
 import ktx.assets.loadOnDemand
+
 class Human(
         private val state: StateSequence = StateSequence(),
-        private val speed: Float = 20f,
-        private val humanService: HumanService,
+        private val speed: Float = 80f,
         private val endurance: Int = 10
 ) : Actor() {
+    private val gameService = GameService
     var target: Facilitate? = null
     val texture by App.am.loadOnDemand<Texture>("human.png")
     var isMoving = false
@@ -36,11 +36,11 @@ class Human(
 
     fun pass(second: Float) {
         if (target == null) {
-            target = humanService.findNearestFacilityByState(this, state.getCurrentState())
+            target = gameService.findNearestFacilityByState(this, state.getCurrentState())
         } else {
             if (ActorUtil.isCollide(this, target!!)) {
+                setPosition(target!!.x, target!!.y)
                 if (isMoving) {
-                    setPosition(target!!.x, target!!.y)
                     clearActions()
                     isMoving = false
                 }
@@ -48,7 +48,9 @@ class Human(
                     target = null
                 }
             } else {
-                moveToTarget(target!!)
+                if (!isMoving) {
+                    moveToTarget(target!!)
+                }
             }
         }
     }

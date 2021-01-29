@@ -2,7 +2,7 @@ package com.rockman.helloMayor.entities
 
 class StateSequence(
         private var index: Int = 0,
-        private val sequence: List<Entry> = listOf(Entry(State.SLEEP, 1000), Entry(State.EAT, 500)),
+        private val sequence: List<Entry> = listOf(Entry(State.SLEEP, 1000), Entry(State.EAT, 500), Entry(State.WORK, 1500)),
         private var remain: Int = 0
 ) {
     init {

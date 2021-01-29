@@ -8,7 +8,6 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -31,7 +30,7 @@ object App : KtxApplicationAdapter {
         super.create()
         //val rockman by am.loadOnDemand<AssetGroup>("rockman.atlas")
         Scene2DSkin.defaultSkin = Skin(Gdx.files.internal("uiskin.json"))
-        gameStage = GameStage()
+        gameStage = GameStage
         menuStage = MenuStage(EventListener { _ -> stage = gameStage; Gdx.input.inputProcessor = stage; true })
         stage = gameStage
         Gdx.input.inputProcessor = stage

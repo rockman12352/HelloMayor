@@ -3,10 +3,15 @@ package com.rockman.helloMayor.services
 import com.rockman.helloMayor.actors.Facilitate
 import com.rockman.helloMayor.actors.Human
 import com.rockman.helloMayor.entities.State
+import com.rockman.helloMayor.stages.GameStage
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class HumanService(val humanList: MutableList<Human> = mutableListOf(),
-                   val facilitateService: FacilitateService
-) {
+object HumanService {
+    private val stage = GameStage
+    private val humanList: MutableList<Human> = mutableListOf()
+    private val facilitateService = FacilitateService
     fun findNearestFacilityByState(human: Human, currentState: State): Facilitate? {
         return when (currentState) {
             State.EAT -> facilitateService.findNearestFacility(human.x, human.y, Facilitate.Type.RESTAURANT)
@@ -20,7 +25,17 @@ class HumanService(val humanList: MutableList<Human> = mutableListOf(),
         humanList.forEach { it.pass(second) }
     }
 
-    init {
-        humanList.add(Human(humanService = this))
+    private fun addHuman(human: Human) {
+        humanList.add(human)
+        stage.addActor(human)
     }
+
+//    init {
+//        addHuman(Human(humanService = this))
+//        val s = this
+//        GlobalScope.launch {
+//            delay(500)
+//            addHuman(Human(humanService = s))
+//        }
+//    }
 }

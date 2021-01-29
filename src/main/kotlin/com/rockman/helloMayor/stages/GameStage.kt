@@ -1,21 +1,16 @@
 package com.rockman.helloMayor.stages
 
-import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.rockman.helloMayor.services.FacilitateService
+import com.rockman.helloMayor.services.GameService
 import com.rockman.helloMayor.services.HumanService
 
-class GameStage : Stage() {
-    private val facilitateService: FacilitateService = FacilitateService()
-    private val humanService: HumanService = HumanService(facilitateService = facilitateService)
-    init {
-        facilitateService.facilitateList.forEach { addActor(it) }
-        humanService.humanList.forEach { addActor(it) }
-    }
+object GameStage : Stage() {
+    private val gameService = GameService
 
     override fun act(delta: Float) {
         super.act(delta)
-        humanService.pass(delta)
+        gameService.pass(delta)
     }
 
     override fun draw() {

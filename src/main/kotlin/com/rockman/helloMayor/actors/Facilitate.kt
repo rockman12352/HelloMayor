@@ -2,22 +2,53 @@ package com.rockman.helloMayor.actors
 
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.rockman.helloMayor.App
 import ktx.assets.getValue
 import ktx.assets.loadOnDemand
 
 
-class Facilitate(
+open class Facilitate(
         val type: Type
 ) : Actor() {
     val queue = mutableListOf<Human>()
-    val capacity = 3
+    val parkingPointList = mutableListOf<ParkingPoint>()
+
+    constructor(type: Type, x: Float, y: Float) : this(type) {
+        this.x = x
+        this.y = y
+    }
+
     enum class Type {
         HOUSE, RESTAURANT, PLAYGROUND, OFFICE
     }
 
-    private companion object {
+    fun getCX(): Float {
+        return x - width / 2
+    }
+
+    fun getCY(): Float {
+        return y - height / 2
+    }
+
+    fun getCentreXY(): Vector2 {
+        return Vector2(getCX(), getCY())
+    }
+
+    fun setCentreXY(x: Float, y: Float) {
+        setPosition(x - width / 2, y - height / 2)
+    }
+
+    fun getCapacity(): Int {
+        return parkingPointList.size
+    }
+
+    override fun toString(): String {
+        return type.name
+    }
+
+    companion object {
         lateinit var RECTANGLE: Texture
         val SQUARE by App.am.loadOnDemand<Texture>("square.png")
         val STAR by App.am.loadOnDemand<Texture>("star.png")
@@ -49,8 +80,9 @@ class Facilitate(
             Type.PLAYGROUND -> batch?.draw(STAR, x, y)
             else -> batch?.draw(STAR, x, y)
         }
-
     }
 
-
+    class ParkingPoint(val x: Float, val y: Float) {
+        var available = true
+    }
 }
