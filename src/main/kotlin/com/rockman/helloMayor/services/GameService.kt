@@ -16,7 +16,7 @@ object GameService {
     private val facilitateList: MutableList<Facilitate> = mutableListOf()
     private val humanList: MutableList<Human> = mutableListOf()
 
-    fun findNearestFacility(x: Float, y: Float, type: Facilitate.Type): Facilitate? {
+    private fun findNearestFacility(x: Float, y: Float, type: Facilitate.Type): Facilitate? {
         val facilitates = facilitateList.filter { it.type == type }
         return if (facilitates.size > 1) {
             facilitates.minBy { (it.x - x).absoluteValue.pow(2) + (it.y - y).absoluteValue.pow(2) }
@@ -30,6 +30,8 @@ object GameService {
         addFacilitate(House(70f, 70f))
         addFacilitate(Facilitate(Facilitate.Type.OFFICE, 100f, 70f))
         addFacilitate(Facilitate(Facilitate.Type.RESTAURANT, 150f, 70f))
+
+
 
         addHuman(Human())
         GlobalScope.launch {

@@ -7,11 +7,17 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
+import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.EventListener
+import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import com.badlogic.gdx.utils.viewport.FitViewport
+import com.badlogic.gdx.utils.viewport.ScreenViewport
+import com.badlogic.gdx.utils.viewport.Viewport
 import com.rockman.helloMayor.stages.GameStage
 import com.rockman.helloMayor.stages.MenuStage
 import com.rockman.helloMayor.utils.Constants
@@ -24,6 +30,8 @@ object App : KtxApplicationAdapter {
     lateinit var menuStage: Stage
     lateinit var gameStage: Stage
     lateinit var batch: SpriteBatch
+    lateinit var viewport: Viewport
+    lateinit var camera: OrthographicCamera
     var elapsedTime = 0f
     var am = AssetManager()
     override fun create() {
@@ -34,11 +42,16 @@ object App : KtxApplicationAdapter {
         menuStage = MenuStage(EventListener { _ -> stage = gameStage; Gdx.input.inputProcessor = stage; true })
         stage = gameStage
         Gdx.input.inputProcessor = stage
+        camera = gameStage.viewport.camera as OrthographicCamera
+        camera.zoom = 5f
+    //    camera.zo
+        viewport = ScreenViewport(camera)
+        viewport.apply()
+    }
 
-        var cam = gameStage.viewport.camera
-        cam.viewportHeight*=2
-        cam.viewportWidth*=2
-        cam.update()
+    override fun resize(width: Int, height: Int) {
+        super.resize(width, height)
+        viewport.update(width, height)
     }
 
     override fun render() {
@@ -49,12 +62,17 @@ object App : KtxApplicationAdapter {
         stage.act()
         stage.draw()
     }
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+        var config = LwjglApplicationConfiguration()
+        config.width = 200
+        config.height = 200
+        //config.fullscreen = true
+        //config.height = Gdx.graphics.height * config.width / Gdx.graphics.width
+        config.title = Constants.GAME_TITLE
+        var app = LwjglApplication(App, config)
+    }
 }
 
-fun main(args: Array<String>) {
-    var config = LwjglApplicationConfiguration()
-    config.width = 200
-    config.height = 200
-    config.title = Constants.GAME_TITLE
-    LwjglApplication(App, config)
-}
+
