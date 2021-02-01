@@ -18,7 +18,7 @@ class Human(
 ) : Actor() {
     private val gameService = GameService
     var target: Facilitate? = null
-    val texture by App.am.loadOnDemand<Texture>("human.png")
+    val texture by App.am.loadOnDemand<Texture>("human.png", App.textureParamer)
     var isMoving = false
 
     init {

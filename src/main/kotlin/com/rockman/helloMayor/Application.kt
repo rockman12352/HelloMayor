@@ -4,17 +4,21 @@
 package com.rockman.helloMayor
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.assets.loaders.TextureLoader
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
+import com.rockman.helloMayor.listener.ViewListener
 import com.rockman.helloMayor.stage.GameStage
 import com.rockman.helloMayor.stage.MenuStage
 import com.rockman.helloMayor.util.Constants
@@ -29,6 +33,7 @@ object App : KtxApplicationAdapter {
     lateinit var batch: SpriteBatch
     lateinit var viewport: Viewport
     lateinit var camera: OrthographicCamera
+    lateinit var textureParamer: TextureLoader.TextureParameter
     var elapsedTime = 0f
     var am = AssetManager()
     override fun create() {
@@ -38,10 +43,10 @@ object App : KtxApplicationAdapter {
         gameStage = GameStage
         menuStage = MenuStage(EventListener { _ -> stage = gameStage; Gdx.input.inputProcessor = stage; true })
         stage = gameStage
-        Gdx.input.inputProcessor = stage
+        Gdx.input.inputProcessor = InputMultiplexer(stage, ViewListener)
         camera = gameStage.viewport.camera as OrthographicCamera
-        camera.zoom = 5f
-    //    camera.zo
+        camera.zoom = 4f
+        //    camera.zo
         viewport = ScreenViewport(camera)
         viewport.apply()
     }
@@ -65,6 +70,10 @@ object App : KtxApplicationAdapter {
         var config = LwjglApplicationConfiguration()
         config.width = 200
         config.height = 200
+        textureParamer = TextureLoader.TextureParameter()
+        textureParamer.genMipMaps = true
+        textureParamer.minFilter = Texture.TextureFilter.MipMapNearestNearest
+        textureParamer.magFilter = Texture.TextureFilter.MipMapNearestNearest
         //config.fullscreen = true
         //config.height = Gdx.graphics.height * config.width / Gdx.graphics.width
         config.title = Constants.GAME_TITLE
