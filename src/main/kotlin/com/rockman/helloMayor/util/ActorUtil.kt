@@ -1,4 +1,4 @@
-package com.rockman.helloMayor.utils
+package com.rockman.helloMayor.util
 
 import com.badlogic.gdx.scenes.scene2d.Actor
 import kotlin.math.absoluteValue

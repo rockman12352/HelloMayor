@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction
 import com.rockman.helloMayor.App
-import com.rockman.helloMayor.entities.StateSequence
-import com.rockman.helloMayor.services.GameService
-import com.rockman.helloMayor.utils.ActorUtil
+import com.rockman.helloMayor.entity.StateSequence
+import com.rockman.helloMayor.service.GameService
+import com.rockman.helloMayor.util.ActorUtil
 import ktx.assets.getValue
 import ktx.assets.loadOnDemand
 

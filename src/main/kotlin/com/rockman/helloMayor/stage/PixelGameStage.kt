@@ -1,4 +1,4 @@
-package com.rockman.helloMayor.stages
+package com.rockman.helloMayor.stage
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.Animation

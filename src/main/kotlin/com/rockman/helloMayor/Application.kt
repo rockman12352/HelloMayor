@@ -7,20 +7,17 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
-import com.badlogic.gdx.graphics.Camera
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.EventListener
-import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
-import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.rockman.helloMayor.stages.GameStage
-import com.rockman.helloMayor.stages.MenuStage
-import com.rockman.helloMayor.utils.Constants
+import com.rockman.helloMayor.stage.GameStage
+import com.rockman.helloMayor.stage.MenuStage
+import com.rockman.helloMayor.util.Constants
 import ktx.app.KtxApplicationAdapter
 import ktx.scene2d.Scene2DSkin
 

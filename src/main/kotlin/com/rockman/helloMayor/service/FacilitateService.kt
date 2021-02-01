@@ -1,8 +1,8 @@
-package com.rockman.helloMayor.services
+package com.rockman.helloMayor.service
 
 import com.rockman.helloMayor.actors.Facilitate
 import com.rockman.helloMayor.actors.facilitates.House
-import com.rockman.helloMayor.stages.GameStage
+import com.rockman.helloMayor.stage.GameStage
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 

@@ -1,11 +1,9 @@
-package com.rockman.helloMayor.stages
+package com.rockman.helloMayor.stage
 
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.rockman.helloMayor.App
-import com.rockman.helloMayor.services.FacilitateService
-import com.rockman.helloMayor.services.GameService
-import com.rockman.helloMayor.services.HumanService
+import com.rockman.helloMayor.service.GameService
 
 object GameStage : Stage() {
     private val gameService = GameService

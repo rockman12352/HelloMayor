@@ -1,4 +1,4 @@
-package com.rockman.helloMayor.entities
+package com.rockman.helloMayor.entity
 
 class StateSequence(
         private var index: Int = 0,

@@ -1,10 +1,10 @@
-package com.rockman.helloMayor.services
+package com.rockman.helloMayor.service
 
 import com.rockman.helloMayor.actors.Facilitate
 import com.rockman.helloMayor.actors.Human
 import com.rockman.helloMayor.actors.facilitates.House
-import com.rockman.helloMayor.entities.State
-import com.rockman.helloMayor.stages.GameStage
+import com.rockman.helloMayor.entity.State
+import com.rockman.helloMayor.stage.GameStage
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

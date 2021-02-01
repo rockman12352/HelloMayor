@@ -1,4 +1,4 @@
-package com.rockman.helloMayor.utils
+package com.rockman.helloMayor.util
 
 object Constants {
     const val GAME_TITLE = "Hello Mayor"

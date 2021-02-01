@@ -1,11 +1,10 @@
-package com.rockman.helloMayor.stages
+package com.rockman.helloMayor.stage
 
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
-import com.rockman.helloMayor.actors.Human
 import ktx.scene2d.Scene2DSkin
 
 class MenuStage(onStart: EventListener) : Stage() {
