@@ -50,9 +50,9 @@ open class Facilitate(
 
     companion object {
         lateinit var RECTANGLE: Texture
-        val SQUARE by App.am.loadOnDemand<Texture>("square.png", App.textureParam)
-        val STAR by App.am.loadOnDemand<Texture>("star.png", App.textureParam)
-        val TRIANGLE by App.am.loadOnDemand<Texture>("triangle.png", App.textureParam)
+        val SQUARE by App.am.loadOnDemand<Texture>("square.png", App.textureParamer)
+        val STAR by App.am.loadOnDemand<Texture>("star.png", App.textureParamer)
+        val TRIANGLE by App.am.loadOnDemand<Texture>("triangle.png", App.textureParamer)
 
         init {
 //            val pixmap = Pixmap(50, 50, Pixmap.Format.RGBA8888)
