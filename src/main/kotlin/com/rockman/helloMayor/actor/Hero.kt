@@ -1,4 +1,4 @@
-package com.rockman.helloMayor.actors
+package com.rockman.helloMayor.actor
 
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch

@@ -1,7 +1,7 @@
 package com.rockman.helloMayor.service
 
-import com.rockman.helloMayor.actors.Facilitate
-import com.rockman.helloMayor.actors.Human
+import com.rockman.helloMayor.actor.Facilitate
+import com.rockman.helloMayor.actor.Human
 import com.rockman.helloMayor.entity.State
 import com.rockman.helloMayor.stage.GameStage
 

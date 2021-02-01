@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.rockman.helloMayor.App
-import com.rockman.helloMayor.actors.Hero
+import com.rockman.helloMayor.actor.Hero
 import ktx.assets.getValue
 import ktx.assets.loadOnDemand
 

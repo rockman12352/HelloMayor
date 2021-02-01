@@ -1,7 +1,7 @@
-package com.rockman.helloMayor.actors.facilitates
+package com.rockman.helloMayor.actor.facilitates
 
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.rockman.helloMayor.actors.Facilitate
+import com.rockman.helloMayor.actor.Facilitate
 
 class House(x: Float, y: Float) : Facilitate(Type.HOUSE, x, y) {
     init {
