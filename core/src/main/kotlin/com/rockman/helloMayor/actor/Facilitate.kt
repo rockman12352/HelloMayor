@@ -11,7 +11,7 @@ import ktx.assets.loadOnDemand
 
 open class Facilitate(
         val type: Type
-) : Actor() {
+) : BaseActor() {
     val queue = mutableListOf<Human>()
     val parkingPointList = mutableListOf<ParkingPoint>()
 
@@ -22,22 +22,6 @@ open class Facilitate(
 
     enum class Type {
         HOUSE, RESTAURANT, PLAYGROUND, OFFICE
-    }
-
-    fun getCX(): Float {
-        return x - width / 2
-    }
-
-    fun getCY(): Float {
-        return y - height / 2
-    }
-
-    fun getCentreXY(): Vector2 {
-        return Vector2(getCX(), getCY())
-    }
-
-    fun setCentreXY(x: Float, y: Float) {
-        setPosition(x - width / 2, y - height / 2)
     }
 
     fun getCapacity(): Int {

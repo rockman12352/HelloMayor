@@ -15,7 +15,7 @@ class Human(
         private val state: StateSequence = StateSequence(),
         private val speed: Float = 80f,
         private val endurance: Int = 10
-) : Actor() {
+) : BaseActor() {
     private val gameService = GameService
     var target: Facilitate? = null
     val texture by App.am.loadOnDemand<Texture>("human.png", App.textureParameter)
