@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.rockman.helloMayor.listener.ViewListener
+import com.rockman.helloMayor.listener.InputListener
 import com.rockman.helloMayor.stage.GameStage
 import com.rockman.helloMayor.stage.MenuStage
 import ktx.app.KtxApplicationAdapter
@@ -47,10 +47,9 @@ object App : KtxApplicationAdapter {
         gameStage = GameStage
         menuStage = MenuStage(EventListener { _ -> stage = gameStage; Gdx.input.inputProcessor = stage; true })
         stage = gameStage
-        Gdx.input.inputProcessor = InputMultiplexer(stage, ViewListener)
+        Gdx.input.inputProcessor = InputMultiplexer(stage, InputListener)
         camera = gameStage.viewport.camera as OrthographicCamera
         camera.zoom = 4f
-        //    camera.zo
         viewport = ScreenViewport(camera)
         viewport.apply()
     }

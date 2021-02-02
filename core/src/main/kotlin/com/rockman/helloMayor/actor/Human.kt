@@ -26,7 +26,6 @@ class Human(
         y = -100f
         width = 50f
         height = 50f
-        debug = true
     }
 
     override fun draw(batch: Batch?, parentAlpha: Float) {

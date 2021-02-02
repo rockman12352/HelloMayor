@@ -1,17 +1,30 @@
 package com.rockman.helloMayor.listener
 
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.rockman.helloMayor.App
 
-object ViewListener : InputProcessor {
+object InputListener : InputProcessor {
     private var lastDragPosition: Vector2? = null
     private var mousePosition = Vector2()
     override fun keyDown(keycode: Int): Boolean {
-        println("Mouse x: ${mousePosition.x}, y: ${mousePosition.x}")
-        var worldPosition = App.camera.unproject(Vector3(mousePosition.x, mousePosition.y, 0f))
-        println("World x: ${worldPosition.x}, y: ${worldPosition.x}")
+        when(keycode){
+            Input.Keys.F2->{
+                App.stage.isDebugAll = true
+                App.stage.setDebugUnderMouse(false)
+            }
+            Input.Keys.F3->{
+                App.stage.isDebugAll = false
+                App.stage.setDebugUnderMouse(true)
+            }
+            else->{
+                println("Mouse x: ${mousePosition.x}, y: ${mousePosition.x}")
+                var worldPosition = App.camera.unproject(Vector3(mousePosition.x, mousePosition.y, 0f))
+                println("World x: ${worldPosition.x}, y: ${worldPosition.x}")
+            }
+        }
         return true
     }
 
