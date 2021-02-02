@@ -1,0 +1,6 @@
+apply plugin: 'org.jetbrains.kotlin.jvm'
+sourceSets.main.resources.srcDirs = ["../android/assets"]
+sourceCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets.main.java.srcDirs = [ "src/" ]
