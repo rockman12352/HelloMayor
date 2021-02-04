@@ -33,7 +33,7 @@ object GameController {
 
         addHuman(Human(-50f, -50f))
         GlobalScope.launch {
-            var count = 10
+            var count = 20
             while (count-- > 0) {
                 delay(300)
                 addHuman(Human(-150f, -150f))

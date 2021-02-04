@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction
 import com.rockman.helloMayor.App
 import com.rockman.helloMayor.entity.GameController
-import com.rockman.helloMayor.entity.HumanList.Companion
 import com.rockman.helloMayor.entity.HumanList.Companion.BEHAVIOR_CONSUMING
 import com.rockman.helloMayor.entity.HumanList.Companion.BEHAVIOR_MOVING
 import com.rockman.helloMayor.entity.HumanList.Companion.BEHAVIOR_QUEUING
@@ -18,19 +17,10 @@ import ktx.assets.loadOnDemand
 class Human(
         private val state: StateSequence = StateSequence(),
         private val speed: Float = 150f,
-        private val endurance: Int = 10
+        private var endurance: Int = ENDURANCE
 ) : BaseActor() {
     var parkingPoint: Facilitate.ParkingPoint? = null
     var behavior = BEHAVIOR_MOVING
-
-    companion object {
-        val TEXTURE by App.am.loadOnDemand<Texture>("human.png", App.textureParameter)
-    }
-
-    constructor(x: Float, y: Float) : this() {
-        this.x = x
-        this.y = y
-    }
 
     private val humanFacilitateService = HumanFacilitateService
     private val gameController = GameController
@@ -41,6 +31,16 @@ class Human(
                 moveToTarget(value)
             }
         }
+
+    companion object {
+        val TEXTURE by App.am.loadOnDemand<Texture>("human.png", App.textureParameter)
+        const val ENDURANCE = 1000
+    }
+
+    constructor(x: Float, y: Float) : this() {
+        this.x = x
+        this.y = y
+    }
 
     init {
         width = 100f
@@ -68,7 +68,7 @@ class Human(
                     if (parkToTarget()) {
                         priority = 1
                     } else {
-                        behavior = BEHAVIOR_QUEUING
+                        setBehavior(BEHAVIOR_QUEUING, (second * 1000).toInt())
                     }
                 }
             } else {
@@ -97,7 +97,7 @@ class Human(
         action.setPosition(target.x + target.internalX - internalX, target.y + target.internalY - internalY)
         action.duration = ActorUtil.distance(this, target) / speed
         addAction(action)
-        behavior = BEHAVIOR_MOVING
+        setBehavior(BEHAVIOR_MOVING, 0)
     }
 
     private fun parkToTarget(): Boolean {
@@ -108,8 +108,20 @@ class Human(
             pp.park(this)
             parkingPoint = pp
             setInternalPosition(target!!.x + pp.x, target!!.y + pp.y)
-            behavior = BEHAVIOR_CONSUMING
+            setBehavior(BEHAVIOR_CONSUMING, 0)
             return true
+        }
+    }
+
+    private fun setBehavior(behavior: Int, ms: Int) {
+        this.behavior = behavior
+        if (behavior == BEHAVIOR_QUEUING) {
+            endurance -= ms
+            if (endurance <= 0) {
+                println("boom! ${this.toString()}")
+            }
+        } else {
+            endurance = ENDURANCE
         }
     }
 }
