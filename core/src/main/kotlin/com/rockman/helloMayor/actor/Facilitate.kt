@@ -9,7 +9,7 @@ import ktx.assets.getValue
 import ktx.assets.loadOnDemand
 
 
-open class Facilitate(
+abstract class Facilitate(
         val type: Type
 ) : BaseActor() {
     val queue = mutableListOf<Human>()
@@ -37,36 +37,20 @@ open class Facilitate(
         val SQUARE by App.am.loadOnDemand<Texture>("square.png", App.textureParameter)
         val STAR by App.am.loadOnDemand<Texture>("star.png", App.textureParameter)
         val TRIANGLE by App.am.loadOnDemand<Texture>("triangle.png", App.textureParameter)
-
-        init {
-//            val pixmap = Pixmap(50, 50, Pixmap.Format.RGBA8888)
-//            pixmap.setColor(Color.BLACK)
-//            pixmap.drawline
-//            pixmap.fillRectangle(0, 0, 100, 100)
-//            ShapeRenderer
-//            RECTANGLE = Texture(pixmap)
-//            pixmap.dispose()
-        }
     }
 
-    init {
-        x = 0f
-        y = 0f
-        width = 100f
-        height = 100f
-    }
-
-    override fun draw(batch: Batch?, parentAlpha: Float) {
-        super.draw(batch, parentAlpha)
-        when (type) {
-            Type.HOUSE -> batch?.draw(SQUARE, x, y)
-            Type.OFFICE -> batch?.draw(TRIANGLE, x, y)
-            Type.PLAYGROUND -> batch?.draw(STAR, x, y)
-            else -> batch?.draw(STAR, x, y)
-        }
+    fun availableParkingPoint(): ParkingPoint? {
+        return parkingPointList.firstOrNull { it.occupant == null }
     }
 
     class ParkingPoint(val x: Float, val y: Float) {
-        var available = true
+        var occupant: Human? = null
+        fun unpark() {
+            occupant = null
+        }
+
+        fun park(human: Human) {
+            occupant = human
+        }
     }
 }

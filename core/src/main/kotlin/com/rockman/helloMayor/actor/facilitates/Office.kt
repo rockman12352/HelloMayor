@@ -6,9 +6,9 @@ import com.rockman.helloMayor.actor.Facilitate
 import ktx.assets.getValue
 import ktx.assets.loadOnDemand
 
-class House(x: Float, y: Float) : Facilitate(Type.HOUSE, x, y) {
+class Office(x: Float, y: Float) : Facilitate(Type.OFFICE, x, y) {
     companion object {
-        val TEXTURE by App.am.loadOnDemand<Texture>("square.png", App.textureParameter)
+        val TEXTURE by App.am.loadOnDemand<Texture>("triangle.png", App.textureParameter)
     }
 
     init {
@@ -20,9 +20,8 @@ class House(x: Float, y: Float) : Facilitate(Type.HOUSE, x, y) {
         drawWidth = 270f
         texture = TEXTURE
 
-        parkingPointList.add(ParkingPoint(50f, 150f))
-        parkingPointList.add(ParkingPoint(150f, 150f))
-        parkingPointList.add(ParkingPoint(50f, 50f))
-        parkingPointList.add(ParkingPoint(150f, 50f))
+        parkingPointList.add(ParkingPoint(175f, 175f))
+        parkingPointList.add(ParkingPoint(25f, 25f))
+        parkingPointList.add(ParkingPoint(175f, 25f))
     }
 }

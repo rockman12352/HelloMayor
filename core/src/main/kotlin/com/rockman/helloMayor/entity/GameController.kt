@@ -1,9 +1,10 @@
-package com.rockman.helloMayor.service
+package com.rockman.helloMayor.entity
 
 import com.rockman.helloMayor.actor.Facilitate
 import com.rockman.helloMayor.actor.Human
 import com.rockman.helloMayor.actor.facilitates.House
-import com.rockman.helloMayor.entity.State
+import com.rockman.helloMayor.actor.facilitates.Office
+import com.rockman.helloMayor.actor.facilitates.Restaurant
 import com.rockman.helloMayor.stage.GameStage
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -11,10 +12,10 @@ import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
-object GameService {
+object GameController {
     private val stage = GameStage
-    private val facilitateList: MutableList<Facilitate> = mutableListOf()
-    private val humanList: MutableList<Human> = mutableListOf()
+    private var facilitateList: MutableList<Facilitate> = mutableListOf()
+    private var humanList = HumanList()
 
     private fun findNearestFacility(x: Float, y: Float, type: Facilitate.Type): Facilitate? {
         val facilitates = facilitateList.filter { it.type == type }
@@ -26,15 +27,17 @@ object GameService {
     }
 
     init {
-        addFacilitate(Facilitate(Facilitate.Type.HOUSE))
         addFacilitate(House(70f, 70f))
-        addFacilitate(Facilitate(Facilitate.Type.OFFICE, 100f, 70f))
-        addFacilitate(Facilitate(Facilitate.Type.RESTAURANT, 150f, 70f))
+        addFacilitate(Office(300f, 300f))
+        addFacilitate(Restaurant(400f, 0f))
 
-        addHuman(Human())
+        addHuman(Human(-50f, -50f))
         GlobalScope.launch {
-            delay(500)
-            addHuman(Human())
+            var count = 10
+            while (count-- > 0) {
+                delay(300)
+                addHuman(Human(-150f, -150f))
+            }
         }
     }
 
@@ -48,9 +51,8 @@ object GameService {
         stage.addActor(human)
     }
 
-
-    fun findNearestFacilityByState(human: Human, currentState: State): Facilitate? {
-        return when (currentState) {
+    fun findNearestFacilityByState(human: Human): Facilitate? {
+        return when (human.getCurrentState()) {
             State.EAT -> findNearestFacility(human.x, human.y, Facilitate.Type.RESTAURANT)
             State.PLAY -> findNearestFacility(human.x, human.y, Facilitate.Type.PLAYGROUND)
             State.SLEEP -> findNearestFacility(human.x, human.y, Facilitate.Type.HOUSE)
@@ -59,6 +61,9 @@ object GameService {
     }
 
     fun pass(second: Float) {
-        humanList.forEach { it.pass(second) }
+        humanList.ejectAll().forEach {
+            it.pass(second)
+            humanList.add(it)
+        }
     }
 }

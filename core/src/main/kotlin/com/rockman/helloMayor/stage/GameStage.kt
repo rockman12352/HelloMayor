@@ -3,13 +3,18 @@ package com.rockman.helloMayor.stage
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.rockman.helloMayor.App
-import com.rockman.helloMayor.service.GameService
+import com.rockman.helloMayor.entity.GameController
+import com.rockman.helloMayor.util.FrameRate
 
 object GameStage : Stage() {
-    private val gameService = GameService
+    private val gameService = GameController
     private var touchDownPosition = Vector2()
     private var active = true
+    private val frameRate = FrameRate()
+
+    init {
+        isDebugAll = true
+    }
 
     override fun act(delta: Float) {
         if (active) {
@@ -17,6 +22,8 @@ object GameStage : Stage() {
             //println("acting")
             gameService.pass(delta)
         }
+        frameRate.update()
+        frameRate.render()
     }
 
     override fun draw() {
