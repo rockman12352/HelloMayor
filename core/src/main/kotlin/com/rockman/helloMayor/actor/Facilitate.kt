@@ -36,7 +36,7 @@ abstract class Facilitate(
         val TRIANGLE by App.am.loadOnDemand<Texture>("triangle.png", App.textureParameter)
     }
 
-    fun availableParkingPoint(): ParkingPoint? {
+    fun getAvailableParkingPoint(): ParkingPoint? {
         return parkingPointList.firstOrNull { it.occupant == null }
     }
 

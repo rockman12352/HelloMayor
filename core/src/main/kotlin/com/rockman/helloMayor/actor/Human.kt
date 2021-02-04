@@ -1,6 +1,8 @@
 package com.rockman.helloMayor.actor
 
+import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction
 import com.rockman.helloMayor.App
 import com.rockman.helloMayor.entity.GameController
@@ -24,7 +26,7 @@ class Human(
 
     private val humanFacilitateService = HumanFacilitateService
     private val gameController = GameController
-    var target: Facilitate? = null
+    private var target: Facilitate? = null
         set(value) {
             field = value
             if (value != null) {
@@ -34,7 +36,8 @@ class Human(
 
     companion object {
         val TEXTURE by App.am.loadOnDemand<Texture>("human.png", App.textureParameter)
-        const val ENDURANCE = 1000
+        val ENDURANCE_TEXTURE = Texture(Pixmap(1, 1, Pixmap.Format.RGB888))
+        const val ENDURANCE = 2000
     }
 
     constructor(x: Float, y: Float) : this() {
@@ -81,7 +84,7 @@ class Human(
         return priority
     }
 
-    fun unpark() {
+    private fun unpark() {
         parkingPoint?.unpark()
         parkingPoint = null
         target = null
@@ -93,7 +96,7 @@ class Human(
 
     //align by internal XY
     private fun moveToTarget(target: BaseActor) {
-        var action = MoveToAction()
+        val action = MoveToAction()
         action.setPosition(target.x + target.internalX - internalX, target.y + target.internalY - internalY)
         action.duration = ActorUtil.distance(this, target) / speed
         addAction(action)
@@ -101,16 +104,16 @@ class Human(
     }
 
     private fun parkToTarget(): Boolean {
-        val pp = target!!.availableParkingPoint()
-        if (pp == null) {
-            return false
-        } else {
+        var parked = false
+        val pp = target!!.getAvailableParkingPoint()
+        if (pp != null) {
             pp.park(this)
             parkingPoint = pp
             setInternalPosition(target!!.x + pp.x, target!!.y + pp.y)
             setBehavior(BEHAVIOR_CONSUMING, 0)
-            return true
+            parked = true
         }
+        return parked
     }
 
     private fun setBehavior(behavior: Int, ms: Int) {
@@ -119,9 +122,17 @@ class Human(
             endurance -= ms
             if (endurance <= 0) {
                 println("boom! ${this.toString()}")
+                endurance = 0
             }
         } else {
             endurance = ENDURANCE
+        }
+    }
+
+    override fun draw(batch: Batch?, parentAlpha: Float) {
+        super.draw(batch, parentAlpha)
+        if (endurance < 1000) {
+            batch?.draw(ENDURANCE_TEXTURE, x + internalX - drawWidth / 2, y + internalY - drawHeight, drawWidth * endurance.toFloat() / 1000f, 20f)
         }
     }
 }
