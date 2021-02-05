@@ -34,13 +34,12 @@ object GameController {
         addFacilitate(Office(300f, 300f))
         addFacilitate(Restaurant(400f, 0f))
 
-        addHuman(Human(-50f, -50f))
-        GlobalScope.launch {
-            var count = 100
-            while (count-- > 0) {
-                delay(300)
-                addHuman(Human(-150f, -150f))
-            }
+        var tp = -150f
+        var count = 100
+        while(count-->0)
+        {
+            addHuman(Human(tp, tp))
+            tp-=50f
         }
     }
 
