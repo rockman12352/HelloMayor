@@ -17,17 +17,14 @@ class StateSequence(
         return sequence[index]
     }
 
-    /**
-     * return true if state not changed
-     */
-    fun consume(ms: Int):Boolean {
+    fun consumeAndIsChanged(ms: Int):Boolean {
         remain -= ms
         if (remain <= 0) {
             index = (index + 1) % sequence.size
             remain += getCurrentEntry().duration
-            return false
+            return true
         }
-        return true
+        return false
     }
 
     class Entry(val state: State, val duration: Int)
