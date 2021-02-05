@@ -18,6 +18,11 @@ object GameStage : Stage() {
 
     override fun act(delta: Float) {
         if (active) {
+            root.children.forEachIndexed { idx, actor ->
+                if (actor == null) {
+                    println("act null idx = ${idx}")
+                }
+            }
             super.act(delta)
             //println("acting")
             gameController.pass(delta)
@@ -27,6 +32,11 @@ object GameStage : Stage() {
     }
 
     override fun draw() {
+        root.children.forEachIndexed { idx, actor ->
+            if (actor == null) {
+                println("draw null idx = ${idx}")
+            }
+        }
         super.draw()
         batch.projectionMatrix = camera.combined
         batch.begin()

@@ -20,9 +20,9 @@ object InputListener : InputProcessor {
                 App.stage.setDebugUnderMouse(true)
             }
             else->{
-                println("Mouse x: ${mousePosition.x}, y: ${mousePosition.x}")
-                var worldPosition = App.camera.unproject(Vector3(mousePosition.x, mousePosition.y, 0f))
-                println("World x: ${worldPosition.x}, y: ${worldPosition.x}")
+               // println("Mouse x: ${mousePosition.x}, y: ${mousePosition.x}")
+              //  var worldPosition = App.camera.unproject(Vector3(mousePosition.x, mousePosition.y, 0f))
+              //  println("World x: ${worldPosition.x}, y: ${worldPosition.x}")
             }
         }
         return true
