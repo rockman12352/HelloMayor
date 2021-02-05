@@ -32,7 +32,7 @@ object App : KtxApplicationAdapter {
     lateinit var camera: OrthographicCamera
     var textureParameter: TextureLoader.TextureParameter = TextureLoader.TextureParameter()
     var elapsedTime = 0f
-    var am = AssetManager()
+    val am = AssetManager()
 
     init {
         textureParameter.genMipMaps = true

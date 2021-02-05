@@ -7,7 +7,7 @@ import com.rockman.helloMayor.entity.GameController
 import com.rockman.helloMayor.util.FrameRate
 
 object GameStage : Stage() {
-    private val gameService = GameController
+    private val gameController = GameController
     private var touchDownPosition = Vector2()
     private var active = true
     private val frameRate = FrameRate()
@@ -20,7 +20,7 @@ object GameStage : Stage() {
         if (active) {
             super.act(delta)
             //println("acting")
-            gameService.pass(delta)
+            gameController.pass(delta)
         }
         frameRate.update()
         frameRate.render()
@@ -28,9 +28,10 @@ object GameStage : Stage() {
 
     override fun draw() {
         super.draw()
-        // App.camera.
-//        batch.begin();
-//        batch.end()
+        batch.projectionMatrix = camera.combined
+        batch.begin()
+        gameController.drawMap(batch)
+        batch.end()
     }
 
     override fun keyDown(keyCode: Int): Boolean {

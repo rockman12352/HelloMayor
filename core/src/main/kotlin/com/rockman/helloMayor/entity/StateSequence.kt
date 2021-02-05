@@ -13,11 +13,11 @@ class StateSequence(
         return getCurrentEntry().state
     }
 
-    fun getCurrentEntry(): Entry {
+    private fun getCurrentEntry(): Entry {
         return sequence[index]
     }
 
-    fun consumeAndIsChanged(ms: Int):Boolean {
+    fun consumeAndIsChanged(ms: Int): Boolean {
         remain -= ms
         if (remain <= 0) {
             index = (index + 1) % sequence.size

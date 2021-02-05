@@ -1,5 +1,6 @@
 package com.rockman.helloMayor.entity
 
+import com.badlogic.gdx.graphics.g2d.Batch
 import com.rockman.helloMayor.actor.Facilitate
 import com.rockman.helloMayor.actor.Human
 import com.rockman.helloMayor.actor.facilitates.House
@@ -16,6 +17,7 @@ object GameController {
     private val stage = GameStage
     private var facilitateList: MutableList<Facilitate> = mutableListOf()
     private var humanList = HumanList()
+    lateinit var map: Map
 
     private fun findNearestFacility(x: Float, y: Float, type: Facilitate.Type): Facilitate? {
         val facilitates = facilitateList.filter { it.type == type }
@@ -27,6 +29,7 @@ object GameController {
     }
 
     init {
+        map = Map("sz")
         addFacilitate(House(70f, 70f))
         addFacilitate(Office(300f, 300f))
         addFacilitate(Restaurant(400f, 0f))
@@ -65,5 +68,9 @@ object GameController {
             it.pass(second)
             humanList.add(it)
         }
+    }
+
+    fun drawMap(batch: Batch?) {
+        map.draw(batch!!)
     }
 }
