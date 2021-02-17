@@ -2,6 +2,7 @@ package com.rockman.helloMayor.stage
 
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.rockman.helloMayor.entity.GameController
 import com.rockman.helloMayor.util.FrameRate
@@ -41,10 +42,9 @@ object GameStage : Stage() {
         return super.keyDown(keyCode)
     }
 
-//    override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-//        var worldPosition = camera.unproject(Vector3(screenX.toFloat(), screenY.toFloat(), 0f))
-//        var hit = hit(worldPosition.x, worldPosition.y, true)
-//        return true
+//    fun click(screenX: Int, screenY: Int) {
+//        val worldPosition = camera.unproject(Vector3(screenX.toFloat(), screenY.toFloat(), 0f))
+//        hit(worldPosition.x, worldPosition.y, true)
 //    }
 
 }

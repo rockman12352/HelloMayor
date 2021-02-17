@@ -27,9 +27,10 @@ object GameController {
 
     init {
         map = Map("sz")
-        addFacilitate(House(70f, 70f))
-        addFacilitate(Office(300f, 300f))
-        addFacilitate(Restaurant(400f, 0f))
+        map.points.forEach { addFacilitate(it) }
+//        addFacilitate(House(70f, 70f))
+//        addFacilitate(Office(300f, 300f))
+//        addFacilitate(Restaurant(400f, 0f))
 
         var tp = -150f
         var count = 100

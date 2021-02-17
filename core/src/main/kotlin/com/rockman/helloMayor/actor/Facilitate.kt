@@ -18,7 +18,7 @@ abstract class Facilitate(
     }
 
     enum class Type {
-        HOUSE, RESTAURANT, PLAYGROUND, OFFICE
+        HOUSE, RESTAURANT, PLAYGROUND, OFFICE, EMPTY
     }
 
     fun getCapacity(): Int {
@@ -27,13 +27,6 @@ abstract class Facilitate(
 
     override fun toString(): String {
         return type.name
-    }
-
-    companion object {
-        lateinit var RECTANGLE: Texture
-        val SQUARE by App.am.loadOnDemand<Texture>("square.png", App.textureParameter)
-        val STAR by App.am.loadOnDemand<Texture>("star.png", App.textureParameter)
-        val TRIANGLE by App.am.loadOnDemand<Texture>("triangle.png", App.textureParameter)
     }
 
     fun getAvailableParkingPoint(): ParkingPoint? {
