@@ -22,6 +22,9 @@ import com.rockman.helloMayor.listener.GlobalGestureListener
 import com.rockman.helloMayor.listener.GlobalInputListener
 import com.rockman.helloMayor.stage.GameStage
 import com.rockman.helloMayor.stage.MenuStage
+import com.rockman.helloMayor.util.config.AndroidConfig
+import com.rockman.helloMayor.util.config.BaseConfig
+import com.rockman.helloMayor.util.config.DesktopConfig
 import ktx.app.KtxApplicationAdapter
 import ktx.scene2d.Scene2DSkin
 
@@ -33,6 +36,7 @@ object App : KtxApplicationAdapter {
     lateinit var batch: SpriteBatch
     lateinit var viewport: Viewport
     lateinit var camera: OrthographicCamera
+    lateinit var config: BaseConfig
     var textureParameter: TextureLoader.TextureParameter = TextureLoader.TextureParameter()
     var elapsedTime = 0f
     val am = AssetManager()
@@ -50,15 +54,24 @@ object App : KtxApplicationAdapter {
         gameStage = GameStage
         menuStage = MenuStage(EventListener { _ -> stage = gameStage; Gdx.input.inputProcessor = stage; true })
         stage = gameStage
-        Gdx.input.inputProcessor = when(Gdx.app.type){
-            Application.ApplicationType.Desktop->InputMultiplexer(stage, GlobalInputListener)
-            else -> InputMultiplexer(stage, GestureDetector(GlobalGestureListener))
-        }
-
         camera = gameStage.viewport.camera as OrthographicCamera
         camera.zoom = 4f
         viewport = ScreenViewport(camera)
         viewport.apply()
+        initPlatform()
+    }
+
+    private fun initPlatform() {
+        when (Gdx.app.type) {
+            Application.ApplicationType.Desktop -> {
+                Gdx.input.inputProcessor = InputMultiplexer(GlobalInputListener, stage)
+                config = DesktopConfig
+            }
+            else -> {
+                Gdx.input.inputProcessor = InputMultiplexer(GestureDetector(GlobalGestureListener), stage)
+                config = AndroidConfig
+            }
+        }
     }
 
     override fun resize(width: Int, height: Int) {

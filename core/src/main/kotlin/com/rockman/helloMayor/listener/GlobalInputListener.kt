@@ -11,6 +11,7 @@ import net.java.games.input.Component
 
 object GlobalInputListener : InputProcessor {
     private var lastDragPosition: Vector2? = null
+    private var startDragPosition: Vector2? = null
     private var mousePosition = Vector2()
     override fun keyDown(keycode: Int): Boolean {
         when (keycode) {
@@ -48,23 +49,33 @@ object GlobalInputListener : InputProcessor {
 //        if (button == Input.Buttons.LEFT) {
 //            GameStage.click(screenX, screenY)
 //        }
-        return true
+        return false
     }
 
     override fun touchUp(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
+        var isDraging = lastDragPosition != null && startDragPosition != null
+        startDragPosition = null
         lastDragPosition = null
-        return true
+        return isDraging
     }
 
     override fun touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean {
-        if (lastDragPosition != null) {
+        if (lastDragPosition == null && startDragPosition == null) {
+            startDragPosition = Vector2(screenX.toFloat(), screenY.toFloat())
+        } else if (lastDragPosition != null && startDragPosition != null) {
             App.camera.translate(
                     (lastDragPosition?.x!! - screenX.toFloat()) * App.camera.zoom,
                     (screenY.toFloat() - lastDragPosition?.y!!) * App.camera.zoom,
                     0f)
+            lastDragPosition = Vector2(screenX.toFloat(), screenY.toFloat())
+        } else if (lastDragPosition == null && dragOverDistance(screenX, screenY)) {
+            lastDragPosition = Vector2(screenX.toFloat(), screenY.toFloat())
         }
-        lastDragPosition = Vector2(screenX.toFloat(), screenY.toFloat())
         return true
+    }
+
+    private fun dragOverDistance(screenX: Int, screenY: Int): Boolean {
+        return Vector2.dst(screenX.toFloat(), screenY.toFloat(), startDragPosition?.x!!, startDragPosition?.y!!) > App.config.dragSensitive
     }
 
     override fun scrolled(amountX: Float, amountY: Float): Boolean {

@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.utils.JsonReader
 import com.rockman.helloMayor.App
 import com.rockman.helloMayor.actor.Facilitate
-import com.rockman.helloMayor.actor.Human
 import com.rockman.helloMayor.actor.facilitates.Empty
 import ktx.assets.getValue
 import ktx.assets.loadOnDemand
@@ -15,6 +14,7 @@ class Map(name: String) {
     private val texture by App.am.loadOnDemand<Texture>("map/${name}.png", App.textureParameter)
     var multiplier = 1
     var points = mutableListOf<Facilitate>()
+    var selectedPoint: Facilitate? = null
     var x = 0f
     var y = 0f
     var width = 1000f
@@ -30,7 +30,7 @@ class Map(name: String) {
         var pointSize = jsonPoints.size + 1
         while (pointSize-- >= 0) {
             //points.add(Vector2(jsonPoints.get(pointSize - 1).getInt(0).toFloat() * multiplier - width / 2, (1000f - jsonPoints.get(pointSize - 1).getInt(1).toFloat()) * multiplier - height / 2))
-            points.add(Empty(jsonPoints.get(pointSize - 1).getInt(0).toFloat() * multiplier - width / 2, (1000f - jsonPoints.get(pointSize - 1).getInt(1).toFloat()) * multiplier - height / 2))
+            points.add(Empty(jsonPoints.get(pointSize - 1).getInt(0).toFloat() * multiplier - width / 2, (1000f - jsonPoints.get(pointSize - 1).getInt(1).toFloat()) * multiplier - height / 2, this))
         }
     }
 

@@ -16,6 +16,7 @@ import com.rockman.helloMayor.entity.HumanList.Companion.BEHAVIOR_QUEUING
 import com.rockman.helloMayor.entity.State
 import com.rockman.helloMayor.entity.StateSequence
 import com.rockman.helloMayor.service.HumanFacilitateService
+import com.rockman.helloMayor.stage.GameStage
 import com.rockman.helloMayor.util.ActorUtil
 import ktx.assets.getValue
 import ktx.assets.loadOnDemand
@@ -29,7 +30,6 @@ class Human(
     var behavior = BEHAVIOR_MOVING
 
     private val humanFacilitateService = HumanFacilitateService
-    private val gameController = GameController
     private var target: Facilitate? = null
         set(value) {
             field = value
@@ -64,7 +64,7 @@ class Human(
      */
     fun pass(second: Float) {
         if (target == null) {
-            target = gameController.findNearestFacilityByState(this)
+            target = (stage as GameStage).findNearestFacilityByState(this)
         }
         if (target != null) {
             if (parkingPoint == null) {

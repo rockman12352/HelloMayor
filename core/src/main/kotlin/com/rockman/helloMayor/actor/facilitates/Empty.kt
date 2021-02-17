@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.rockman.helloMayor.actor.Facilitate
+import com.rockman.helloMayor.entity.Map
 
-class Empty(x: Float, y: Float) : Facilitate(Type.EMPTY, x, y) {
+class Empty(x: Float, y: Float, val map: Map) : Facilitate(Type.EMPTY, x, y) {
     companion object {
         val TEXTURE = Texture(Pixmap(1, 1, Pixmap.Format.RGB888))
     }
@@ -20,15 +21,18 @@ class Empty(x: Float, y: Float) : Facilitate(Type.EMPTY, x, y) {
         drawWidth = 10f
         texture = TEXTURE
         setInternalPosition(x, y)
-        addListener(object: InputListener(){
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+        addListener(object : InputListener() {
+            override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
                 onClick()
-                return false
+            }
+
+            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+                return true
             }
         })
     }
 
     fun onClick() {
-        println("ccc!")
+        map.selectedPoint = this
     }
 }
