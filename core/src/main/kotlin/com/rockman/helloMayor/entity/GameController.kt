@@ -7,9 +7,6 @@ import com.rockman.helloMayor.actor.facilitates.House
 import com.rockman.helloMayor.actor.facilitates.Office
 import com.rockman.helloMayor.actor.facilitates.Restaurant
 import com.rockman.helloMayor.stage.GameStage
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 

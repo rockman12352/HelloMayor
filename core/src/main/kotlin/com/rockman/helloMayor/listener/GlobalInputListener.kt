@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.rockman.helloMayor.App
 
-object InputListener : InputProcessor {
+object GlobalInputListener : InputProcessor {
     private var lastDragPosition: Vector2? = null
     private var mousePosition = Vector2()
     override fun keyDown(keycode: Int): Boolean {
@@ -35,7 +35,6 @@ object InputListener : InputProcessor {
     override fun keyTyped(character: Char): Boolean {
         return true
     }
-
 
     override fun mouseMoved(screenX: Int, screenY: Int): Boolean {
         mousePosition = Vector2(screenX.toFloat(), screenY.toFloat())

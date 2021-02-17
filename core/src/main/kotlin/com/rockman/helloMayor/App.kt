@@ -3,6 +3,7 @@
  */
 package com.rockman.helloMayor
 
+import com.badlogic.gdx.Application
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.assets.AssetManager
@@ -11,12 +12,14 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.input.GestureDetector
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.rockman.helloMayor.listener.InputListener
+import com.rockman.helloMayor.listener.GlobalGestureListener
+import com.rockman.helloMayor.listener.GlobalInputListener
 import com.rockman.helloMayor.stage.GameStage
 import com.rockman.helloMayor.stage.MenuStage
 import ktx.app.KtxApplicationAdapter
@@ -47,7 +50,11 @@ object App : KtxApplicationAdapter {
         gameStage = GameStage
         menuStage = MenuStage(EventListener { _ -> stage = gameStage; Gdx.input.inputProcessor = stage; true })
         stage = gameStage
-        Gdx.input.inputProcessor = InputMultiplexer(stage, InputListener)
+        Gdx.input.inputProcessor = when(Gdx.app.type){
+            Application.ApplicationType.Desktop->InputMultiplexer(stage, GlobalInputListener)
+            else -> InputMultiplexer(stage, GestureDetector(GlobalGestureListener))
+        }
+
         camera = gameStage.viewport.camera as OrthographicCamera
         camera.zoom = 4f
         viewport = ScreenViewport(camera)
