@@ -1,26 +1,22 @@
-package com.rockman.helloMayor.entity
+package com.rockman.helloMayor.service
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.utils.JsonReader
-import com.rockman.helloMayor.App
-import com.rockman.helloMayor.actor.Facilitate
 import com.rockman.helloMayor.actor.facilitates.Empty
-import ktx.assets.getValue
-import ktx.assets.loadOnDemand
+import com.rockman.helloMayor.stage.GameStage
 
-class Map(name: String) {
-    private val texture by App.am.loadOnDemand<Texture>("map/${name}.png", App.textureParameter)
+object MapService {
+    lateinit var texture: Texture
     var multiplier = 1
-    var points = mutableListOf<Facilitate>()
-    var selectedPoint: Facilitate? = null
     var x = 0f
     var y = 0f
     var width = 1000f
     var height = 1000f
 
-    init {
+    fun initStage(name: String, stage: GameStage) {
+        texture = Texture(Gdx.files.internal("map/${name}.png"))
         val data = Gdx.files.internal("map/${name}.data").readString()
         val json = JsonReader().parse(data)
         multiplier = json.getInt("multiplier")
@@ -29,8 +25,8 @@ class Map(name: String) {
         val jsonPoints = json.get("points")
         var pointSize = jsonPoints.size + 1
         while (pointSize-- >= 0) {
-            //points.add(Vector2(jsonPoints.get(pointSize - 1).getInt(0).toFloat() * multiplier - width / 2, (1000f - jsonPoints.get(pointSize - 1).getInt(1).toFloat()) * multiplier - height / 2))
-            points.add(Empty(jsonPoints.get(pointSize - 1).getInt(0).toFloat() * multiplier - width / 2, (1000f - jsonPoints.get(pointSize - 1).getInt(1).toFloat()) * multiplier - height / 2, this))
+            val p = jsonPoints.get(pointSize - 1)
+            stage.addFacilitate(Empty(p.getInt(0).toFloat() * multiplier - width / 2, (height - p.getInt(1).toFloat()) * multiplier - height / 2))
         }
     }
 

@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.rockman.helloMayor.actor.Facilitate
-import com.rockman.helloMayor.entity.Map
+import com.rockman.helloMayor.stage.GameStage
 
-class Empty(x: Float, y: Float, val map: Map) : Facilitate(Type.EMPTY, x, y) {
+class Empty(x: Float, y: Float) : Facilitate(Type.EMPTY, x, y) {
     companion object {
         val TEXTURE = Texture(Pixmap(1, 1, Pixmap.Format.RGB888))
     }
@@ -33,6 +33,6 @@ class Empty(x: Float, y: Float, val map: Map) : Facilitate(Type.EMPTY, x, y) {
     }
 
     fun onClick() {
-        map.selectedPoint = this
+        (stage as GameStage).selectedPoint = this
     }
 }

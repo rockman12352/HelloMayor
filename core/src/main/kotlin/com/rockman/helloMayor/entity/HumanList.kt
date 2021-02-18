@@ -25,6 +25,10 @@ class HumanList {
         return list
     }
 
+    fun notConsuming(): List<Human> {
+        return queueing + moving
+    }
+
     companion object {
         const val BEHAVIOR_CONSUMING = 1
         const val BEHAVIOR_QUEUING = 2

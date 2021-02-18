@@ -30,10 +30,12 @@ class Human(
     var behavior = BEHAVIOR_MOVING
 
     private val humanFacilitateService = HumanFacilitateService
-    private var target: Facilitate? = null
+    var target: Facilitate? = null
         set(value) {
             field = value
-            if (value != null) {
+            if (value == null) {
+                clearActions()
+            } else {
                 moveToTarget(value)
             }
         }

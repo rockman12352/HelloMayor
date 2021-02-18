@@ -46,9 +46,9 @@ object GlobalInputListener : InputProcessor {
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
-//        if (button == Input.Buttons.LEFT) {
-//            GameStage.click(screenX, screenY)
-//        }
+        if (button == Input.Buttons.LEFT) {
+            GameStage.click(screenX, screenY)
+        }
         return false
     }
 

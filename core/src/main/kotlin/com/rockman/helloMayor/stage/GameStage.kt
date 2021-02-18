@@ -1,17 +1,19 @@
 package com.rockman.helloMayor.stage
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.rockman.helloMayor.actor.Facilitate
+import com.rockman.helloMayor.actor.FacilitateButton
 import com.rockman.helloMayor.actor.Human
 import com.rockman.helloMayor.actor.facilitates.Empty
-import com.rockman.helloMayor.entity.GameController
-import com.rockman.helloMayor.entity.HumanList
-import com.rockman.helloMayor.entity.Map
-import com.rockman.helloMayor.entity.State
+import com.rockman.helloMayor.actor.facilitates.House
+import com.rockman.helloMayor.entity.*
+import com.rockman.helloMayor.service.MapService
 import com.rockman.helloMayor.util.FrameRate
 import kotlin.math.absoluteValue
+import kotlin.math.min
 import kotlin.math.pow
 
 object GameStage : Stage() {
@@ -20,22 +22,48 @@ object GameStage : Stage() {
     private val frameRate = FrameRate()
     private var facilitateList: MutableList<Facilitate> = mutableListOf()
     private var humanList = HumanList()
-    lateinit var map: Map
+    private var facilitateButtonList: MutableList<FacilitateButton> = mutableListOf()
+    private var menuBatch = SpriteBatch()
+    var selectedPoint: Facilitate? = null
 
     init {
+        initFacilitateButtons()
         isDebugAll = true
-        map = Map("sz")
-        map.points.forEach { addActor(it) }
+        MapService.initStage("sz", this)
 //        addFacilitate(House(70f, 70f))
 //        addFacilitate(Office(300f, 300f))
 //        addFacilitate(Restaurant(400f, 0f))
-
+        resize(Gdx.graphics.width, Gdx.graphics.height)
         var tp = -150f
         var count = 100
         while (count-- > 0) {
-            addActor(Human(tp, tp))
+            addHuman(Human(tp, tp))
             tp -= 50f
         }
+    }
+
+    private fun addHuman(human: Human){
+        humanList.add(human)
+        addActor(human)
+    }
+
+    fun addFacilitate(facilitate: Facilitate){
+        facilitateList.add(facilitate)
+        addActor(facilitate)
+        humanList.notConsuming().forEach{it.target = null}
+    }
+
+    fun replaceFacilitate(n: Facilitate, o: Facilitate)
+    {
+
+    }
+
+    private fun initFacilitateButtons() {
+        facilitateButtonList.add(FacilitateButton(Facilitate.Type.RESTAURANT))
+        facilitateButtonList.add(FacilitateButton(Facilitate.Type.PLAYGROUND))
+        facilitateButtonList.add(FacilitateButton(Facilitate.Type.HOUSE))
+        facilitateButtonList.add(FacilitateButton(Facilitate.Type.OFFICE))
+        facilitateButtonList.forEach { it.isVisible = true }
     }
 
     fun findNearestFacilityByState(human: Human): Facilitate? {
@@ -72,15 +100,19 @@ object GameStage : Stage() {
         super.draw()
         batch.projectionMatrix = camera.combined
         batch.begin()
-        map.draw(batch!!)
-        if (map.selectedPoint is Empty) {
-            displayFacilitateOption(batch)
-        }
+        MapService.draw(batch!!)
         batch.end()
+
+        if (selectedPoint is Empty) {
+            menuBatch.begin()
+            drawMenu(menuBatch)
+            menuBatch.end()
+        }
+
     }
 
-    private fun displayFacilitateOption(batch: Batch) {
-        //batch.draw()
+    private fun drawMenu(menuBatch: SpriteBatch) {
+        facilitateButtonList.forEach { it.draw(menuBatch, 0f) }
     }
 
     override fun keyDown(keyCode: Int): Boolean {
@@ -88,6 +120,35 @@ object GameStage : Stage() {
             active = !active
         }
         return super.keyDown(keyCode)
+    }
+
+    fun resize(width: Int, height: Int) {
+        var buttonHeight = height.toFloat() / 5f
+        var buttonWidth = width.toFloat() * 0.8f / facilitateButtonList.size
+        var buttonSize = min(buttonHeight, buttonWidth)
+        facilitateButtonList.forEachIndexed { idx, btn ->
+            btn.width = buttonSize
+            btn.height = buttonSize
+            btn.x = buttonSize * idx + buttonSize / 10f
+            btn.y = height.toFloat() / 10f
+        }
+    }
+
+    override fun dispose() {
+        super.dispose()
+        menuBatch.dispose()
+    }
+
+    fun click(screenX: Int, screenY: Int) {
+        if(selectedPoint != null)
+        {
+            var idx = facilitateList.indexOf(selectedPoint)
+            var point = facilitateList[idx]
+            var newFaciliate = House(point.x, point.y)
+            addActor(newFaciliate)
+            facilitateList[idx] = newFaciliate
+            selectedPoint = null
+        }
     }
 
 

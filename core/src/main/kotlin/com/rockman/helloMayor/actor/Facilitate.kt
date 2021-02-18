@@ -1,10 +1,5 @@
 package com.rockman.helloMayor.actor
 
-import com.badlogic.gdx.graphics.Texture
-import com.rockman.helloMayor.App
-import ktx.assets.getValue
-import ktx.assets.loadOnDemand
-
 
 abstract class Facilitate(
         val type: Type
