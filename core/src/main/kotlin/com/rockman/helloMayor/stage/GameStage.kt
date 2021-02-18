@@ -3,12 +3,13 @@ package com.rockman.helloMayor.stage
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.rockman.helloMayor.actor.Facilitate
 import com.rockman.helloMayor.actor.FacilitateButton
 import com.rockman.helloMayor.actor.Human
 import com.rockman.helloMayor.actor.facilitates.Empty
-import com.rockman.helloMayor.actor.facilitates.House
 import com.rockman.helloMayor.entity.*
 import com.rockman.helloMayor.service.MapService
 import com.rockman.helloMayor.util.FrameRate
@@ -42,20 +43,23 @@ object GameStage : Stage() {
         }
     }
 
-    private fun addHuman(human: Human){
+    private fun addHuman(human: Human) {
         humanList.add(human)
         addActor(human)
     }
 
-    fun addFacilitate(facilitate: Facilitate){
+    fun addFacilitate(facilitate: Facilitate) {
         facilitateList.add(facilitate)
         addActor(facilitate)
-        humanList.notConsuming().forEach{it.target = null}
+        humanList.notConsuming().forEach { it.target = null }
     }
 
-    fun replaceFacilitate(n: Facilitate, o: Facilitate)
-    {
+    private fun replaceFacilitate(o: Facilitate, n: Facilitate) {
+        var internalPosition = o.getInternalPosition()
+        n.setInternalPosition(internalPosition.x, internalPosition.y)
 
+        o.remove()
+        addFacilitate(n)
     }
 
     private fun initFacilitateButtons() {
@@ -140,14 +144,13 @@ object GameStage : Stage() {
     }
 
     fun click(screenX: Int, screenY: Int) {
-        if(selectedPoint != null)
-        {
-            var idx = facilitateList.indexOf(selectedPoint)
-            var point = facilitateList[idx]
-            var newFaciliate = House(point.x, point.y)
-            addActor(newFaciliate)
-            facilitateList[idx] = newFaciliate
-            selectedPoint = null
+        if (selectedPoint != null) {
+            var clicked = facilitateButtonList.firstOrNull { it.click(Vector3(screenX.toFloat(), Gdx.graphics.height - screenY.toFloat(), 0f)) }
+            if (clicked != null) {
+                replaceFacilitate(selectedPoint!!, clicked.constructFunction.call(0f, 0f))
+                selectedPoint = null
+            }
+
         }
     }
 

@@ -16,6 +16,7 @@ object MapService {
     var height = 1000f
 
     fun initStage(name: String, stage: GameStage) {
+        var originalHeight = height
         texture = Texture(Gdx.files.internal("map/${name}.png"))
         val data = Gdx.files.internal("map/${name}.data").readString()
         val json = JsonReader().parse(data)
@@ -26,7 +27,7 @@ object MapService {
         var pointSize = jsonPoints.size + 1
         while (pointSize-- >= 0) {
             val p = jsonPoints.get(pointSize - 1)
-            stage.addFacilitate(Empty(p.getInt(0).toFloat() * multiplier - width / 2, (height - p.getInt(1).toFloat()) * multiplier - height / 2))
+            stage.addFacilitate(Empty(p.getInt(0).toFloat() * multiplier - width / 2, (originalHeight - p.getInt(1).toFloat()) * multiplier - height / 2))
         }
     }
 

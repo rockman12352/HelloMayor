@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction
 import com.rockman.helloMayor.App
-import com.rockman.helloMayor.entity.GameController
 import com.rockman.helloMayor.entity.HumanList.Companion.BEHAVIOR_CONSUMING
 import com.rockman.helloMayor.entity.HumanList.Companion.BEHAVIOR_MOVING
 import com.rockman.helloMayor.entity.HumanList.Companion.BEHAVIOR_QUEUING
@@ -138,7 +137,7 @@ class Human(
         if (pp != null) {
             pp.park(this)
             parkingPoint = pp
-            var position = positionOfInternalPosition(target!!.x + pp.x, target!!.y + pp.y)
+            var position = worldToInternalPosition(target!!.x + pp.x, target!!.y + pp.y)
             moveTo(position.x, position.y) {
                 setBehavior(BEHAVIOR_CONSUMING, 0)
             }

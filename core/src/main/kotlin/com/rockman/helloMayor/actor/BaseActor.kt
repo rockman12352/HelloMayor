@@ -31,8 +31,12 @@ open class BaseActor : Actor() {
         setPosition(position.x - internalX, position.y - internalY)
     }
 
-    fun positionOfInternalPosition(x: Float, y: Float): Vector2 {
+    fun worldToInternalPosition(x: Float, y: Float): Vector2 {
         return Vector2(x - internalX, y - internalY)
+    }
+
+    fun getInternalPosition(): Vector2{
+        return Vector2(x + internalX, y + internalY)
     }
 
 }
