@@ -36,7 +36,7 @@ object GameStage : Stage() {
 //        addFacilitate(Restaurant(400f, 0f))
         resize(Gdx.graphics.width, Gdx.graphics.height)
         var tp = -150f
-        var count = 100
+        var count = 10
         while (count-- > 0) {
             addHuman(Human(tp, tp))
             tp -= 50f
@@ -51,7 +51,7 @@ object GameStage : Stage() {
     fun addFacilitate(facilitate: Facilitate) {
         facilitateList.add(facilitate)
         addActor(facilitate)
-        humanList.notConsuming().forEach { it.target = null }
+        humanList.notConsuming().filter { it.parkingPoint == null }.forEach { it.target = null }
     }
 
     private fun replaceFacilitate(o: Facilitate, n: Facilitate) {

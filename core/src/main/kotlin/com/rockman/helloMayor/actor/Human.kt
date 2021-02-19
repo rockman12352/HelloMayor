@@ -32,9 +32,8 @@ class Human(
     var target: Facilitate? = null
         set(value) {
             field = value
-            if (value == null) {
-                clearActions()
-            } else {
+            clearActions()
+            if (value != null) {
                 moveToTarget(value)
             }
         }
