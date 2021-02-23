@@ -4,7 +4,6 @@ package com.rockman.helloMayor.actor
 abstract class Facilitate(
         val type: Type
 ) : BaseActor() {
-    val queue = mutableListOf<Human>()
     val parkingPointList = mutableListOf<ParkingPoint>()
 
     constructor(type: Type, x: Float, y: Float) : this(type) {

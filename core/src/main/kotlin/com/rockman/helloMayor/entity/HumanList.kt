@@ -1,11 +1,13 @@
 package com.rockman.helloMayor.entity
 
+import com.rockman.helloMayor.actor.Facilitate
 import com.rockman.helloMayor.actor.Human
 
 class HumanList {
     var consuming: MutableList<Human> = mutableListOf()
     var queueing: MutableList<Human> = mutableListOf()
     var moving: MutableList<Human> = mutableListOf()
+    var tempQueuing: MutableList<Human> = mutableListOf()
     fun add(human: Human) {
         when (human.behavior) {
             BEHAVIOR_CONSUMING -> consuming.add(human)
@@ -15,6 +17,9 @@ class HumanList {
     }
 
     fun ejectAll(): List<Human> {
+        tempQueuing.clear()
+        tempQueuing.addAll(queueing)
+
         val list = mutableListOf<Human>()
         consuming.forEach { list.add(it) }
         consuming.clear()
@@ -27,6 +32,10 @@ class HumanList {
 
     fun notConsuming(): List<Human> {
         return queueing + moving
+    }
+
+    fun queuingFor(facilitate: Facilitate): Int {
+        return tempQueuing.filter { it.target == facilitate }.size
     }
 
     companion object {

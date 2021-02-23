@@ -18,6 +18,7 @@ import kotlin.math.min
 import kotlin.math.pow
 
 object GameStage : Stage() {
+    val QUEUING_PENALTY = 10000000f
     private val gameController = GameController
     private var active = true
     private val frameRate = FrameRate()
@@ -46,6 +47,11 @@ object GameStage : Stage() {
     private fun addHuman(human: Human) {
         humanList.add(human)
         addActor(human)
+    }
+
+    fun addHuman(screenX: Float, screenY: Float) {
+        var location = camera.unproject(Vector3(screenX, screenY, 0f))
+        addHuman(Human(location.x, location.y))
     }
 
     fun addFacilitate(facilitate: Facilitate) {
@@ -82,7 +88,7 @@ object GameStage : Stage() {
     private fun findNearestFacility(x: Float, y: Float, type: Facilitate.Type): Facilitate? {
         val facilitates = facilitateList.filter { it.type == type }
         return if (facilitates.size > 1) {
-            facilitates.minByOrNull { (it.x - x).absoluteValue.pow(2) + (it.y - y).absoluteValue.pow(2) }
+            facilitates.minByOrNull { (it.x - x).absoluteValue.pow(2) + (it.y - y).absoluteValue.pow(2) + humanList.queuingFor(it) * QUEUING_PENALTY }
         } else {
             facilitates.firstOrNull()
         }

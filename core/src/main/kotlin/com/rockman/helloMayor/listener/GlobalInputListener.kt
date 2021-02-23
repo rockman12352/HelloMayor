@@ -1,13 +1,11 @@
 package com.rockman.helloMayor.listener
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.math.Vector3
 import com.rockman.helloMayor.App
 import com.rockman.helloMayor.stage.GameStage
-import net.java.games.input.Component
 
 object GlobalInputListener : InputProcessor {
     private var lastDragPosition: Vector2? = null
@@ -22,6 +20,9 @@ object GlobalInputListener : InputProcessor {
             Input.Keys.F3 -> {
                 App.stage.isDebugAll = false
                 App.stage.setDebugUnderMouse(true)
+            }
+            Input.Keys.F5 -> {
+                (App.stage as GameStage).addHuman(mousePosition.x, mousePosition.y)
             }
             else -> {
                 println("Mouse x: ${mousePosition.x}, y: ${mousePosition.x}")
