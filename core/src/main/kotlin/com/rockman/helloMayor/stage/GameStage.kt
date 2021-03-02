@@ -18,8 +18,6 @@ import kotlin.math.min
 import kotlin.math.pow
 
 object GameStage : Stage() {
-    val QUEUING_PENALTY = 10000000f
-    private val gameController = GameController
     private var active = true
     private val frameRate = FrameRate()
     private var facilitateList: MutableList<Facilitate> = mutableListOf()
@@ -88,7 +86,7 @@ object GameStage : Stage() {
     private fun findNearestFacility(x: Float, y: Float, type: Facilitate.Type): Facilitate? {
         val facilitates = facilitateList.filter { it.type == type }
         return if (facilitates.size > 1) {
-            facilitates.minByOrNull { (it.x - x).absoluteValue.pow(2) + (it.y - y).absoluteValue.pow(2) + humanList.queuingFor(it) * QUEUING_PENALTY }
+            facilitates.minByOrNull { (it.x - x).absoluteValue.pow(2) + (it.y - y).absoluteValue.pow(2)}
         } else {
             facilitates.firstOrNull()
         }

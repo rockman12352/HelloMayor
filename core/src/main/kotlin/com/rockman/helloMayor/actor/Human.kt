@@ -14,7 +14,6 @@ import com.rockman.helloMayor.entity.HumanList.Companion.BEHAVIOR_MOVING
 import com.rockman.helloMayor.entity.HumanList.Companion.BEHAVIOR_QUEUING
 import com.rockman.helloMayor.entity.State
 import com.rockman.helloMayor.entity.StateSequence
-import com.rockman.helloMayor.service.HumanFacilitateService
 import com.rockman.helloMayor.stage.GameStage
 import com.rockman.helloMayor.util.ActorUtil
 import ktx.assets.getValue
@@ -28,7 +27,6 @@ class Human(
     var parkingPoint: Facilitate.ParkingPoint? = null
     var behavior = BEHAVIOR_MOVING
 
-    private val humanFacilitateService = HumanFacilitateService
     var target: Facilitate? = null
         set(value) {
             field = value

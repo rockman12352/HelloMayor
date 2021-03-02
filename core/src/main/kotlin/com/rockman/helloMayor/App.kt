@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.rockman.helloMayor.entity.GameController
 import com.rockman.helloMayor.listener.GlobalGestureListener
 import com.rockman.helloMayor.listener.GlobalInputListener
 import com.rockman.helloMayor.stage.GameStage
@@ -77,7 +76,6 @@ object App : KtxApplicationAdapter {
 
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
-        GameController.resize(width, height)
         viewport.update(width, height)
     }
 

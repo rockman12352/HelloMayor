@@ -17,8 +17,8 @@ class HumanList {
     }
 
     fun ejectAll(): List<Human> {
-        tempQueuing.clear()
-        tempQueuing.addAll(queueing)
+       // tempQueuing.clear()
+       // tempQueuing.addAll(queueing)
 
         val list = mutableListOf<Human>()
         consuming.forEach { list.add(it) }
